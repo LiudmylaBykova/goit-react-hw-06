@@ -1,7 +1,11 @@
-import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { selectNameFilter } from "../../redux/selectors";
+import { changeFilter } from "../../redux/filtersSlice";
 import css from "./SearchBox.module.css";
 
-const SearchBox = ({ value, onFilter }) => {
+const SearchBox = () => {
+  const dispatch = useDispatch();
+  const value = useSelector(selectNameFilter);
   return (
     <div className={css.searchWrap}>
       <label>
@@ -12,16 +16,11 @@ const SearchBox = ({ value, onFilter }) => {
           name="search"
           placeholder="Jack Wilson"
           value={value}
-          onChange={(e) => onFilter(e.target.value)}
+          onChange={(e) => dispatch(changeFilter(e.target.value))}
         />
       </label>
     </div>
   );
-};
-
-SearchBox.propTypes = {
-  value: PropTypes.string,
-  onFilter: PropTypes.func.isRequired,
 };
 
 export default SearchBox;
